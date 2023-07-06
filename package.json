@@ -1,0 +1,26 @@
+{
+  "name": "flexer",
+  "version": "0.2.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server-install": "pnpm --filter server install",
+    "server-build": "pnpm --filter server build",
+    "ext-build": "pnpm --filter chrome-extension build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newskys/FLEXER.git"
+  },
+  "author": "Kyusik Shin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/newskys/FLEXER/issues"
+  },
+  "homepage": "https://github.com/newskys/FLEXER#readme",
+  "devDependencies": {
+    "eslint": "^8.20.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
+  }
+}

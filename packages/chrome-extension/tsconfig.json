@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "strict": false,
+    "isolatedModules": false,
+    "jsx": "react-jsx",
+  },
+  "include": ["widget/**/*.ts", "widget/**/*.tsx","popup/**/*.ts", "popup/**/*.tsx", "common/**/*.ts"],
+  "exclude": ["node_modules"]
+}
