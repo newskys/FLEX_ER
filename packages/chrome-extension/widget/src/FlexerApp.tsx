@@ -23,7 +23,7 @@ export type NoticeView = {
   isNew: boolean
 }
 
-function App() {
+function FlexerApp() {
   const [userSchedule, setUserSchedule] = useState(null)
   const [now, setNow] = useState(Date.now())
   const [coreValues, setCoreValues] = useState<CoreValues>(null)
@@ -354,7 +354,7 @@ function App() {
   return (
     <Widget>
       <WidgetHeader isNarrow={isNarrowUI}>
-        <WidgetLogo version="v1.3" isNarrow={isNarrowUI} />
+        <WidgetLogo version="v1.4" isNarrow={isNarrowUI} />
         <div className="flex justify-center items-center">
           {/*<WidgetDashboardButton />*/}
           <WidgetMoreButton
@@ -478,4 +478,4 @@ function App() {
   )
 }
 
-export default App
+export default FlexerApp

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Modal, { ModalData } from '../modal/Modal'
 import { ajaxModule } from '../../../../../../common/util/ajax'
-import { NoticeView } from '../../../../App'
+import { NoticeView } from '../../../../FlexerApp'
 import Reddot from '../../atomic/Reddot'
 import clsx from 'clsx'
 import chrome from '../../../../../../common/util/chrome'

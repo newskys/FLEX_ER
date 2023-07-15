@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
-import { NextData } from '../../../common/type/api/ssr'
+import FlexerApp from './FlexerApp'
 import { RecoilRoot } from 'recoil'
 
 const rootId = 'flexer2-root'
@@ -24,7 +23,7 @@ const boot = () => {
 
   ReactDOM.render(
     <RecoilRoot>
-      <App />
+      <FlexerApp />
     </RecoilRoot>,
     document.getElementById(rootId),
   )

@@ -2,7 +2,6 @@ const path = require('path')
 
 module.exports = {
   mode: 'production',
-  // devtool: "inline-source-map",
   entry: './popup/src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),

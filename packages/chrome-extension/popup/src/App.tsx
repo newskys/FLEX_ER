@@ -324,7 +324,7 @@ function App() {
   return (
     <Widget>
       <WidgetHeader isNarrow={false}>
-        <WidgetLogo version="v1.3" isNarrow={false} />
+        <WidgetLogo version="v1.4" isNarrow={false} />
         <div className="flex justify-center items-center">
           {/*<WidgetDashboardButton />*/}
           <WidgetMoreButton
