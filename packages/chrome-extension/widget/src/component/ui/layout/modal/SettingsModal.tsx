@@ -18,6 +18,9 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
   const [fixedWorkingHourChecked, setFixedWorkingHourChecked] =
     useState<boolean>(!!isWorkingHourFixed)
 
+  const initialWorkingHourChecked = useRef<boolean>(!!isWorkingHourFixed)
+  const [isWorkingHourChanged, setWorkingHourChange] = useState<boolean>(false)
+
   const [startDateChecked, setStartDateChecked] = useState<boolean>(!!startDate)
   const [tempStartDate, setTempStartDate] = useState<Date>(startDate)
 
@@ -43,6 +46,9 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
 
   const handleFixedWorkingHourCheck = (e) => {
     setFixedWorkingHourChecked(!fixedWorkingHourChecked)
+    setWorkingHourChange(
+      initialWorkingHourChecked.current !== !fixedWorkingHourChecked,
+    )
   }
   const handleStartDateCheck = (e) => {
     setStartDateChecked(!startDateChecked)
@@ -185,6 +191,11 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
                         </span>
                       )}
                     </label>
+                    {isWorkingHourChanged && (
+                      <span className="text-sm" style={{ color: 'darkorange' }}>
+                        반드시 회사의 근무정책을 확인한 후 설정해주세요.
+                      </span>
+                    )}
                   </div>
                   <div className="mt-[8px]">
                     <label
