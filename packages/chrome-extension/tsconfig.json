@@ -5,6 +5,6 @@
     "isolatedModules": false,
     "jsx": "react-jsx",
   },
-  "include": ["widget/**/*.ts", "widget/**/*.tsx","popup/**/*.ts", "popup/**/*.tsx", "common/**/*.ts"],
+  "include": ["widget/**/*.ts", "widget/**/*.tsx","popup/**/*.ts", "popup/**/*.tsx", "common/**/*.ts", "common/**/*.tsx"],
   "exclude": ["node_modules"]
 }

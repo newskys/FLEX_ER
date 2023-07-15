@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
 import { RecoilRoot } from 'recoil'
+import FlexerApp from '../../common/flexerModule/FlexerApp'
 
 const rootId = 'root'
 
 ReactDOM.render(
   <RecoilRoot>
-    <App />
+    <FlexerApp isFullMode={true} />
   </RecoilRoot>,
   document.getElementById(rootId),
 )

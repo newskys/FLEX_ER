@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { Settings } from '../../../../store/settings'
+import { useRecoilValue } from 'recoil'
+import { $configsStore } from '../../../../store/configs'
 
 export interface Props {
   settingsStore: Settings
@@ -12,6 +14,7 @@ export interface Props {
 const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
   const startDateCheckRef = useRef<HTMLInputElement>(null)
   const endDateCheckRef = useRef<HTMLInputElement>(null)
+  const isFullMode = useRecoilValue($configsStore).isFullMode
 
   const { startDate, endDate, isWorkingHourFixed } = settingsStore
 
@@ -125,23 +128,49 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
     return dayjs(date).endOf('month').format(formatStr)
   }
 
+  console.log('DateChecked', startDateChecked, endDateChecked)
+
   return (
     <div
-      className="relative z-[11001]"
+      className={clsx('relative', isFullMode ? 'z-10' : 'z-[11001]')}
       aria-labelledby="modal-title"
       role="dialog"
       aria-modal="true"
     >
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-      <div className="fixed z-[2147483647] inset-0 overflow-y-auto">
-        <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
-          <div className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full w-fit">
-            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-              <div className="sm:flex sm:items-start">
+      <div
+        className={clsx(
+          'fixed inset-0 overflow-y-auto',
+          !isFullMode && 'z-[2147483647]',
+        )}
+      >
+        <div
+          className={clsx(
+            isFullMode
+              ? 'h-full'
+              : 'flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0',
+          )}
+        >
+          <div
+            className={clsx(
+              'relative bg-white text-left',
+              isFullMode
+                ? 'flex flex-col w-full h-full'
+                : 'rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full w-fit',
+            )}
+          >
+            <div
+              className={clsx(
+                'bg-white px-4 pt-5 pb-4',
+                isFullMode ? 'flex-grow' : 'sm:p-6 sm:pb-4',
+              )}
+            >
+              <div className={clsx(!isFullMode && 'sm:flex sm:items-start')}>
                 <section
-                  className={
-                    'mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10 bg-blue-100'
-                  }
+                  className={clsx(
+                    'mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100',
+                    !isFullMode && 'sm:mx-0 sm:h-10 sm:w-10',
+                  )}
                 >
                   <svg
                     className="h-6 w-6 text-blue-600"
@@ -159,7 +188,12 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
                     />
                   </svg>
                 </section>
-                <aside className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left flex-grow">
+                <aside
+                  className={clsx(
+                    'mt-3 text-center flex-grow',
+                    !isFullMode && 'sm:mt-0 sm:ml-4 sm:text-left',
+                  )}
+                >
                   <h3
                     className="text-lg leading-6 font-medium text-gray-900"
                     id="modal-title"
@@ -230,7 +264,10 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
                                   ? dayjs(startDate).format('YYYY-MM-DD')
                                   : ''
                               }
-                              className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text border-gray-300 rounded-md"
+                              className={clsx(
+                                'focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-300 rounded-md',
+                                !isFullMode && 'sm:text',
+                              )}
                               onChange={handleChangeStartDate}
                             />
                           </p>
@@ -303,11 +340,21 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
                 </aside>
               </div>
             </div>
-            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <div
+              className={clsx(
+                'bg-gray-50 px-4 py-3',
+                isFullMode
+                  ? 'flex flex-row items-center'
+                  : 'sm:px-6 sm:flex sm:flex-row-reverse',
+              )}
+            >
               <button
                 type="button"
                 className={clsx(
-                  'w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm focus:ring-blue-500 bg-blue-600 hover:bg-blue-700',
+                  'w-full inline-flex justify-center rounded-md border shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2',
+                  isFullMode
+                    ? ' focus:ring-indigo-500 border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
+                    : 'sm:ml-3 sm:w-auto sm:text-sm focus:ring-blue-500 bg-blue-600 hover:bg-blue-700 border-transparent text-white',
                 )}
                 onClick={handleClickSubmit}
               >
@@ -315,7 +362,12 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
               </button>
               <button
                 type="button"
-                className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                className={clsx(
+                  'w-full inline-flex justify-center rounded-md border shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2',
+                  isFullMode
+                    ? 'focus:ring-blue-500 bg-blue-600 hover:bg-blue-700 border-transparent text-white'
+                    : 'focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm mt-3 border-gray-300 bg-white text-gray-700 hover:bg-gray-50',
+                )}
                 onClick={handleClickCancel}
               >
                 취소

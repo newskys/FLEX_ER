@@ -16,6 +16,7 @@ import { CoreValues } from '../../common/type'
 import ExpandButton from './component/ui/atomic/ExpandButton'
 import SmallIndicator from './component/ui/atomic/SmallIndicator'
 import clsx from 'clsx'
+import { $configsStore } from './store/configs'
 
 export type NoticeView = {
   title: string
@@ -23,7 +24,7 @@ export type NoticeView = {
   isNew: boolean
 }
 
-function FlexerApp() {
+function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
   const [userSchedule, setUserSchedule] = useState(null)
   const [now, setNow] = useState(Date.now())
   const [coreValues, setCoreValues] = useState<CoreValues>(null)
@@ -37,6 +38,7 @@ function FlexerApp() {
   ] = useState<string>(null)
   const [notices, setNotices] = useState<NoticeView[]>([])
   const [settingsStore, setSettingsStore] = useRecoilState($settingsStore)
+  const [configsStore, setConfigsStore] = useRecoilState($configsStore)
   const refreshInterval = useRef<number>(null)
   const resizeObserver = useRef<ResizeObserver>(null)
   const [isExpanded, setExpanded] = useState<boolean>(true)
@@ -51,7 +53,7 @@ function FlexerApp() {
 
   const initialize = async () => {
     ajaxModule.init()
-    initExternalElement()
+    !isFullMode && initExternalElement()
 
     initSettings()
 
@@ -312,7 +314,11 @@ function FlexerApp() {
     initialize()
 
     startWidgetRefreshInterval()
-    addResizeEventListener()
+    !isFullMode && addResizeEventListener()
+
+    setConfigsStore({
+      isFullMode,
+    })
 
     return () => {
       destroy()
@@ -347,7 +353,7 @@ function FlexerApp() {
   }, [isNarrowUI])
 
   const destroy = () => {
-    removeResizeObserver()
+    !isFullMode && removeResizeObserver()
     window.clearInterval(refreshInterval.current)
   }
 

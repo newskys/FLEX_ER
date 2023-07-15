@@ -3,10 +3,10 @@ const path = require('path')
 module.exports = {
   mode: 'production',
   // devtool: "inline-source-map",
-  entry: './widget/src/index.tsx',
+  entry: './main/src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'widget.js',
+    filename: 'main.js',
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -23,7 +23,7 @@ module.exports = {
         loader: 'ts-loader',
         exclude: /node_modules|server|dashboard|popup/,
         include: [
-          path.resolve(__dirname, 'widget/'),
+          path.resolve(__dirname, 'main/'),
           path.resolve(__dirname, 'common/'),
         ],
       },

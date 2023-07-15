@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import FlexerApp from './FlexerApp'
 import { RecoilRoot } from 'recoil'
+import FlexerApp from '../../common/flexerModule/FlexerApp'
 
 const rootId = 'flexer2-root'
 const modalId = 'flexer2-modal-root'
@@ -23,7 +23,7 @@ const boot = () => {
 
   ReactDOM.render(
     <RecoilRoot>
-      <FlexerApp />
+      <FlexerApp isFullMode={false} />
     </RecoilRoot>,
     document.getElementById(rootId),
   )
