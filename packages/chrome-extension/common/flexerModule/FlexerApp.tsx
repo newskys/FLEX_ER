@@ -75,7 +75,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
       },
     })
 
-    setExpanded(!!JSON.parse(isExpanded)?.isExpanded)
+    setExpanded(!!JSON.parse(isExpanded)?.isExpanded || isFullMode)
   }
 
   const getSchedule = async () => {
@@ -472,7 +472,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
             isExpanded ? `right-[8px] bottom-[8px]` : `right-[1px] bottom-[1px]`
           }`}
         >
-          {init && !isNarrowUI && (
+          {init && !isNarrowUI && !isFullMode && (
             <ExpandButton
               defaultExpanded={isExpanded}
               onClick={(e, isExpanded) => changeExpand(isExpanded)}
