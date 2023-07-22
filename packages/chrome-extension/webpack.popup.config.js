@@ -15,12 +15,12 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         use: ['babel-loader'],
-        exclude: /node_modules|server|dashboard|widget/,
+        exclude: /node_modules|server|widget/,
       },
       {
         test: /.tsx?/,
         loader: 'ts-loader',
-        exclude: /node_modules|server|dashboard|widget/,
+        exclude: /node_modules|server|widget/,
         include: [
           path.resolve(__dirname, 'popup/'),
           path.resolve(__dirname, 'common/'),

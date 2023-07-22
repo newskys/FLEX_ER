@@ -4,8 +4,7 @@
   "scripts": {
     "build-core": "webpack --config webpack.core.config.js",
     "build-widget": "webpack --config webpack.widget.config.js && npx tailwindcss -i ./widget/src/input.css -o ./dist/widget.css",
-    "build-popup": "webpack --config webpack.popup.config.js && npx tailwindcss -i ./popup/src/input.css -o ./dist/popup.css",
-    "build-dashboard": "webpack --config webpack.dashboard.config.js && npx tailwindcss -i ./dashboard/src/input.css -o ./dist/dashboard.css"
+    "build-popup": "webpack --config webpack.popup.config.js && npx tailwindcss -i ./popup/src/input.css -o ./dist/popup.css"
   },
   "repository": {
     "type": "git",

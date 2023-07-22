@@ -3,7 +3,7 @@ const path = require('path')
 module.exports = {
   mode: 'production',
   // devtool: "inline-source-map",
-  entry: './main/src/index.tsx',
+  entry: './widget/src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
@@ -16,14 +16,14 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         use: ['babel-loader'],
-        exclude: /node_modules|server|dashboard|popup/,
+        exclude: /node_modules|server|popup/,
       },
       {
         test: /.tsx?/,
         loader: 'ts-loader',
-        exclude: /node_modules|server|dashboard|popup/,
+        exclude: /node_modules|server|popup/,
         include: [
-          path.resolve(__dirname, 'main/'),
+          path.resolve(__dirname, 'widget/'),
           path.resolve(__dirname, 'common/'),
         ],
       },
