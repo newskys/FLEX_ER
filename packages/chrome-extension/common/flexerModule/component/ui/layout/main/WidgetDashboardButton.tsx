@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import DashboardModal from '../modal/DashboardModal'
+import ModalPortal from '../modal/ModalPortal'
 
 const WidgetDashboardButton = () => {
   const [showDashboardModal, setShowDashboardModal] = useState<boolean>(false)
@@ -13,7 +14,11 @@ const WidgetDashboardButton = () => {
 
   return (
     <>
-      {showDashboardModal && <DashboardModal onClose={handleClose} />}
+      {showDashboardModal && (
+        <ModalPortal>
+          <DashboardModal onClose={handleClose} />
+        </ModalPortal>
+      )}
       <button className="mr-[4px]" onClick={handleClick}>
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -6,7 +6,7 @@ module.exports = {
   entry: './widget/src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js',
+    filename: 'widget.js',
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
