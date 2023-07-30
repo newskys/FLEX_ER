@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import chrome from '../../../../../util/chrome'
@@ -57,6 +57,38 @@ const DashboardModal = ({ onClose }: Props) => {
 
     return JSON.parse(userWorkingInfo)
   }
+
+  const viewWorkingData = useMemo(() => {
+    if (!workingChartData) {
+      return null
+    }
+
+    console.log('workingChartData', workingChartData)
+
+    const viewData = {
+      colHeader: ['일', '월', '화', '수', '목', '금', '토'],
+      rowHeader: ['1주차', '2주차', '3주차', '4주차', '5주차', '6주차'],
+      body: workingChartData,
+    }
+
+    // const refinedViewData: string[][] = Array(6).fill([''])
+    // refinedViewData[0] = [...viewData.colHeader]
+    //
+    // console.log('viewData.body', viewData.body)
+    //
+    // const data = viewData.body.map((week, index) => {
+    //   let row = Array(6).fill('')
+    //   row[0] = viewData.rowHeader[index]
+    //   row = [row[0], ...week]
+    //   // row = row.concat(week)
+    //   return row
+    // })
+    //
+    // return [refinedViewData[0], ...data]
+    return viewData
+  }, [workingChartData])
+
+  console.log('viewWorkingData', viewWorkingData)
 
   return (
     <div
