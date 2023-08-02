@@ -66,7 +66,7 @@ const DashboardModal = ({ onClose }: Props) => {
     console.log('workingChartData', workingChartData)
 
     const viewData = {
-      colHeader: ['일', '월', '화', '수', '목', '금', '토'],
+      colHeader: ['요일', '일', '월', '화', '수', '목', '금', '토'],
       rowHeader: ['1주차', '2주차', '3주차', '4주차', '5주차', '6주차'],
       body: workingChartData,
     }
@@ -90,6 +90,17 @@ const DashboardModal = ({ onClose }: Props) => {
 
   console.log('viewWorkingData', viewWorkingData)
 
+  const getCellHueColor = (minutes: number) => {
+    if (minutes <= 300) {
+      return 240
+    }
+    if (minutes >= 660) {
+      return 0
+    }
+
+    return Math.round(240 - ((minutes - 300) / 3) * 2)
+  }
+
   return (
     <div
       className="relative z-[11001]"
@@ -102,14 +113,37 @@ const DashboardModal = ({ onClose }: Props) => {
         <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
           <div className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full w-fit">
             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-              <div className="grid grid-cols-5 gap-2">
+              <div className="grid grid-cols-6 justify-items-center mb-[8px]">
+                {viewWorkingData?.colHeader
+                  .filter((item, index) => {
+                    return index !== 1 && index !== 7
+                  })
+                  .map((item, index) => {
+                    return <div>{item}</div>
+                  })}
+              </div>
+              <div className="grid grid-cols-6 justify-items-center">
                 {workingChartData?.flatMap((week, index) => {
                   return week
                     .filter((_, index) => {
-                      return !(index === 0 || index === 6)
+                      return index !== 6
                     })
-                    .map((day, index) => {
-                      return <div>{day}</div>
+                    .map((minutes, innerIndex) => {
+                      if (innerIndex === 0) {
+                        return <div>{viewWorkingData?.rowHeader[index]}</div>
+                      }
+                      return (
+                        <div
+                          className="text-center w-full"
+                          style={{
+                            backgroundColor: `hsl(${getCellHueColor(
+                              minutes,
+                            )}, 50%, 75%)`,
+                          }}
+                        >
+                          {minutes}
+                        </div>
+                      )
                     })
                 })}
               </div>
