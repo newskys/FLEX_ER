@@ -113,7 +113,10 @@ const DashboardModal = ({ onClose }: Props) => {
         <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
           <div className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full w-fit">
             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-              <div className="grid grid-cols-6 justify-items-center mb-[8px]">
+              <h3 className="text-lg leading-6 font-medium text-gray-900">
+                근무시간 Heatmap
+              </h3>
+              <div className="grid grid-cols-6 items-center justify-items-center mt-[16px] mb-[8px]">
                 {viewWorkingData?.colHeader
                   .filter((item, index) => {
                     return index !== 1 && index !== 7
@@ -122,7 +125,7 @@ const DashboardModal = ({ onClose }: Props) => {
                     return <div>{item}</div>
                   })}
               </div>
-              <div className="grid grid-cols-6 justify-items-center">
+              <div className="grid grid-cols-6 justify-items-center h-[320px]">
                 {workingChartData?.flatMap((week, index) => {
                   return week
                     .filter((_, index) => {
@@ -130,18 +133,26 @@ const DashboardModal = ({ onClose }: Props) => {
                     })
                     .map((minutes, innerIndex) => {
                       if (innerIndex === 0) {
-                        return <div>{viewWorkingData?.rowHeader[index]}</div>
+                        return (
+                          <div className="flex justify-center items-center text-center w-full">
+                            {viewWorkingData?.rowHeader[index]}
+                          </div>
+                        )
                       }
                       return (
                         <div
-                          className="text-center w-full"
-                          style={{
-                            backgroundColor: `hsl(${getCellHueColor(
-                              minutes,
-                            )}, 50%, 75%)`,
-                          }}
+                          className="flex justify-center items-center text-center w-full"
+                          style={
+                            minutes > 0
+                              ? {
+                                  backgroundColor: `hsl(${getCellHueColor(
+                                    minutes,
+                                  )}, 50%, 75%)`,
+                                }
+                              : {}
+                          }
                         >
-                          {minutes}
+                          {minutes > 0 ? minutes : '-'}
                         </div>
                       )
                     })

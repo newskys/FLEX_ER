@@ -219,7 +219,7 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
                       </span>
                       {settingsStore.isWorkingHourEditable && (
                         <span className="text-xs text-gray-500 rounded-full bg-gray-200 ml-[4px] pt-[2px] pb-[2px] pl-[4px] pr-[4px]">
-                          선택 가능
+                          Beta
                         </span>
                       )}
                     </label>
