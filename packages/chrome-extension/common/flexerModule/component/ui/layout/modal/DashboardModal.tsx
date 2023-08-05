@@ -108,7 +108,7 @@ const DashboardModal = ({ onClose }: Props) => {
           <div className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full w-fit">
             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <h3 className="text-lg leading-6 font-medium text-gray-900">
-                근무시간 Heatmap
+                근무시간 Heatmap (분)
               </h3>
               <div className="grid grid-cols-6 items-center justify-items-center mt-[16px] mb-[8px]">
                 {viewWorkingData?.colHeader

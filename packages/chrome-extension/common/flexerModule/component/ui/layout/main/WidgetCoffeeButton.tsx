@@ -1,7 +1,9 @@
 import React from 'react'
+import { sendAnalytics } from '../../../../api/notice'
 
 const WidgetCoffeeButton = () => {
   const handleClick = (e) => {
+    sendAnalytics('click_donation_button')
     window.open('https://www.buymeacoffee.com/milkaru1', '_blank')
   }
   return (
