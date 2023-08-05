@@ -11,7 +11,7 @@ const WidgetHeader = ({ isNarrow, children }: Props) => {
     <div
       className={clsx(
         'flex justify-between items-center',
-        isNarrow ? 'flex-col' : 'py-2 px-6 flex-row',
+        isNarrow ? 'flex-col py-2' : 'py-2 px-4 flex-row',
       )}
     >
       {children}
