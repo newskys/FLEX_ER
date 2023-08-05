@@ -35,25 +35,6 @@ const boot = () => {
   )
 }
 
-const insertGA = () => {
-  var imported = document.createElement('script')
-  imported.async = true
-  imported.src = 'https://www.googletagmanager.com/gtag/js?id=G-N7JGY05S44'
-  document.head.appendChild(imported)
-
-  // @ts-ignore
-  window.dataLayer = window.dataLayer || []
-  // @ts-ignore
-  function gtag() {
-    // @ts-ignore
-    dataLayer.push(arguments)
-  }
-  // @ts-ignore
-  gtag('js', new Date())
-  // @ts-ignore
-  gtag('config', 'G-N7JGY05S44')
-}
-
 let flexBootCheckInterval = window.setInterval(() => {
   try {
     const flexRoot = document.getElementById('app-shell-root')

@@ -9,6 +9,7 @@ import SettingsModal from '../modal/SettingsModal'
 import { useRecoilState } from 'recoil'
 import { $settingsStore, Settings } from '../../../../store/settings'
 import ModalPortal from '../modal/ModalPortal'
+import { sendAnalytics } from '../../../../api/notice'
 
 interface Props {
   userSchedule: any
@@ -35,6 +36,7 @@ const WidgetMoreButton = ({ userSchedule, notices, isNarrow }: Props) => {
   }
 
   const handleClickMore = (e) => {
+    !isMenuOpened && sendAnalytics('click_more_button')
     setMenuOpened(!isMenuOpened)
   }
 
@@ -65,6 +67,8 @@ const WidgetMoreButton = ({ userSchedule, notices, isNarrow }: Props) => {
       },
       contents: notices[0].contents,
     })
+
+    sendAnalytics('click_notice_button')
   }
 
   const handleClickReport = (e) => {
@@ -115,6 +119,8 @@ const WidgetMoreButton = ({ userSchedule, notices, isNarrow }: Props) => {
         },
       },
     })
+
+    sendAnalytics('click_report_button')
   }
 
   const handleClickPropose = (e) => {
@@ -126,10 +132,14 @@ const WidgetMoreButton = ({ userSchedule, notices, isNarrow }: Props) => {
     e.preventDefault()
     setMenuOpened(false)
     setShowSettingModal(true)
+    sendAnalytics('click_settings_button')
   }
 
   const handleClickSubmitSettingModal = async (settingModalData) => {
     setShowSettingModal(false)
+    sendAnalytics('click_settings_submit_button', {
+      isWorkingHourFixed: settingModalData.isWorkingHourFixed,
+    })
 
     await chrome.sendMessage('STORE', {
       type: 'SET',

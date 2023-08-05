@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import DashboardModal from '../modal/DashboardModal'
 import ModalPortal from '../modal/ModalPortal'
+import { sendAnalytics } from '../../../../api/notice'
 
 const WidgetDashboardButton = () => {
   const [showDashboardModal, setShowDashboardModal] = useState<boolean>(false)
   const handleClick = (e) => {
     setShowDashboardModal(true)
+
+    sendAnalytics('click_dashboard_button')
   }
 
   const handleClose = () => {

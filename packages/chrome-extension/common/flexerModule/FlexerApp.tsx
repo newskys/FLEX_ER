@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Indicator from './component/ui/atomic/Indicator'
 import WidgetBody from './component/ui/layout/main/WidgetBody'
 import WidgetHeader from './component/ui/layout/main/WidgetHeader'
@@ -42,9 +42,9 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
   const [configsStore, setConfigsStore] = useRecoilState($configsStore)
   const refreshInterval = useRef<number>(null)
   const resizeObserver = useRef<ResizeObserver>(null)
-  const [isExpanded, setExpanded] = useState<boolean>(true)
+  const [isExpanded, setExpanded] = useState<boolean | null>(null)
   const [init, setInit] = useState<boolean>(false)
-  const [isNarrowUI, setNarrowUI] = useState<boolean>(false)
+  const [isNarrowUI, setNarrowUI] = useState<boolean | null>(null)
 
   const initExternalElement = () => {
     const flexRoot = document.getElementById('app-shell-root')
@@ -59,26 +59,12 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
     initSettings()
 
     await showWidget()
-    setInit(true)
 
     try {
       await fetchNotice()
     } catch (e) {
       console.warn(e)
     }
-
-    initAnalytics()
-  }
-
-  const initAnalytics = async () => {
-    const clientId = await chrome.sendMessage('ANALYTICS', {
-      type: 'CLIENT_ID',
-    })
-    const sessionId = await chrome.sendMessage('ANALYTICS', {
-      type: 'SESSION_ID',
-    })
-
-    sendAnalytics(clientId, sessionId)
   }
 
   const initSettings = async () => {
@@ -370,6 +356,26 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
     !isFullMode && removeResizeObserver()
     window.clearInterval(refreshInterval.current)
   }
+
+  const initCondition = useMemo(() => {
+    return isFullMode ? true : isNarrowUI !== null && isExpanded !== null
+  }, [isFullMode, isNarrowUI, isExpanded])
+
+  useEffect(() => {
+    if (!initCondition) return
+
+    setInit(true)
+
+    sendAnalytics(
+      isFullMode ? 'page_view_full' : 'page_view',
+      isFullMode
+        ? {}
+        : {
+            isNarrowUI,
+            isExpanded,
+          },
+    )
+  }, [initCondition])
 
   return (
     <Widget>
