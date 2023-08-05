@@ -7,7 +7,6 @@ interface Result {
 }
 
 const GA_ENDPOINT = 'https://www.google-analytics.com/mp/collect'
-const DEFAULT_ENGAGEMENT_TIME_IN_MSEC = 100
 
 export const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_VERCEL_FIREBASE_MEASUREMENT_ID,
@@ -18,12 +17,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Result>,
 ) {
-  console.log('req.body', req.body)
+  console.log('req.body.parsed', JSON.stringify(req.body))
   await fetch(
     `${GA_ENDPOINT}?measurement_id=${firebaseConfig.measurementId}&api_secret=${firebaseConfig.apiSecret}`,
     {
       method: 'POST',
-      body: req.body,
+      body: JSON.stringify(req.body),
     },
   )
 
