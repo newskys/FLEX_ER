@@ -18,6 +18,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Result>,
 ) {
+  console.log('req.body', req.body)
   await fetch(
     `${GA_ENDPOINT}?measurement_id=${firebaseConfig.measurementId}&api_secret=${firebaseConfig.apiSecret}`,
     {
