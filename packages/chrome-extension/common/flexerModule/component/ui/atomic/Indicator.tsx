@@ -1,5 +1,6 @@
 import React, { MouseEventHandler, useRef, useState } from 'react'
 import Tooltip from './Tooltip'
+import TooltipPortal from './TooltipPortal'
 
 interface Props {
   title: string
@@ -31,11 +32,15 @@ const Indicator = ({
       onMouseLeave={(e) => handleMouseOver(e, false)}
     >
       {tooltipText && isMouseOver && ref.current && (
-        <Tooltip
-          left={0}
-          // left={ref.current.offsetWidth + ref.current.getBoundingClientRect().x}
-          text={tooltipText}
-        />
+        <TooltipPortal>
+          <Tooltip
+            left={
+              ref.current.offsetWidth + ref.current.getBoundingClientRect().x
+            }
+            top={ref.current.getBoundingClientRect().y}
+            text={tooltipText}
+          />
+        </TooltipPortal>
       )}
       <div className="flex flex-row items-center justify-center">
         <span className="text-sm text-gray-400">{title}</span>

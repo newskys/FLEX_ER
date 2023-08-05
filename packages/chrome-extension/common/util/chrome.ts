@@ -11,13 +11,15 @@ export type SendMessageT = {
       value?: string
     }
   }
+  ANALYTICS: {
+    type: 'CLIENT_ID' | 'SESSION_ID'
+  }
 }
 
 const sendMessage = async (
   type: keyof SendMessageT,
   data: SendMessageT[keyof SendMessageT],
 ) => {
-  data.type === 'SET' && console.log('setsetset', data)
   return await new Promise<string>((resolve, reject) => {
     try {
       chrome.runtime.sendMessage(

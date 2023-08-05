@@ -27,7 +27,6 @@ const DashboardModal = ({ onClose }: Props) => {
       workedDayInfos.forEach((item) => {
         const { date: dateStr, workingMinutes } = item
         const date = dayjs(dateStr)
-        console.log('day', dateStr, date.day())
         weeks[weekCount][date.day()] = workingMinutes
 
         if (date.day() === 6) {
@@ -35,7 +34,6 @@ const DashboardModal = ({ onClose }: Props) => {
         }
       })
 
-      console.log('weeks', weeks)
       setWorkingChartData(weeks)
     } catch (e) {
       console.error(e)
@@ -63,8 +61,6 @@ const DashboardModal = ({ onClose }: Props) => {
       return null
     }
 
-    console.log('workingChartData', workingChartData)
-
     const viewData = {
       colHeader: ['요일', '일', '월', '화', '수', '목', '금', '토'],
       rowHeader: ['1주차', '2주차', '3주차', '4주차', '5주차', '6주차'],
@@ -87,8 +83,6 @@ const DashboardModal = ({ onClose }: Props) => {
     // return [refinedViewData[0], ...data]
     return viewData
   }, [workingChartData])
-
-  console.log('viewWorkingData', viewWorkingData)
 
   const getCellHueColor = (minutes: number) => {
     if (minutes <= 300) {

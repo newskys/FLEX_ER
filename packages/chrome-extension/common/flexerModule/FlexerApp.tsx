@@ -7,7 +7,7 @@ import WidgetLogo from './component/ui/layout/main/WidgetLogo'
 import WidgetMoreButton from './component/ui/layout/main/WidgetMoreButton'
 import { ajaxModule } from '../../common/util/ajax'
 import chrome from '../../common/util/chrome'
-import { getAllNotices } from './api/notice'
+import { getAllNotices, sendAnalytics } from './api/notice'
 import dayjs from 'dayjs'
 import date from '../../common/util/date'
 import { useRecoilState } from 'recoil'
@@ -66,6 +66,19 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
     } catch (e) {
       console.warn(e)
     }
+
+    initAnalytics()
+  }
+
+  const initAnalytics = async () => {
+    const clientId = await chrome.sendMessage('ANALYTICS', {
+      type: 'CLIENT_ID',
+    })
+    const sessionId = await chrome.sendMessage('ANALYTICS', {
+      type: 'SESSION_ID',
+    })
+
+    sendAnalytics(clientId, sessionId)
   }
 
   const initSettings = async () => {
@@ -180,7 +193,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
 
     // if (date.isWorkingHourEditable(now) === false) {
     // value.isWorkingHourFixed = !date.isWorkingHourEditable(now)
-    console.log('value!!', value)
+    // console.log('value!!', value)
     // await chrome.sendMessage('STORE', {
     //   type: 'SET',
     //   data: {

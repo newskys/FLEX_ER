@@ -50,7 +50,6 @@ function App({ data }: Props) {
 
   const processSchedules = async (userIdHash: string, schedule) => {
     const userSettings = await getSettingsFromStorage()
-    console.log('userSettings', userSettings)
     const coreValues: CoreValues = calcCoreValues(
       schedule,
       userSettings.startDate,

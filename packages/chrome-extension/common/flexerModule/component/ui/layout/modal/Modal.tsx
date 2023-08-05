@@ -46,7 +46,6 @@ const Modal = ({
   const inputRef = useRef<HTMLInputElement>(null)
   const [checked, setChecked] = useState<boolean>(!!checkBoxData?.defaultValue)
   const isFullMode = useRecoilValue($configsStore).isFullMode
-  console.log('isFullMode', isFullMode)
 
   const handleClickCheckBox = (e) => {
     setChecked(!checked)

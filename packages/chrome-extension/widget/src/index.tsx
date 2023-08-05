@@ -5,6 +5,7 @@ import FlexerApp from '../../common/flexerModule/FlexerApp'
 
 const rootId = 'flexer2-root'
 const modalId = 'flexer2-modal-root'
+const tooltipId = 'flexer2-tooltip-root'
 
 const boot = () => {
   const flexReactRoot = document.getElementById('root')
@@ -17,9 +18,14 @@ const boot = () => {
 
   const flexerModalRoot = document.createElement('div')
   flexerModalRoot.id = modalId
+  const flexerTooltipRoot = document.createElement('div')
+  flexerTooltipRoot.id = tooltipId
 
   profileEl.parentElement.insertBefore(flexerRoot, profileEl.nextSibling)
   flexReactRoot.insertBefore(flexerModalRoot, flexReactRoot.children[0])
+  flexReactRoot.insertBefore(flexerTooltipRoot, flexReactRoot.children[0])
+
+  // insertGA()
 
   ReactDOM.render(
     <RecoilRoot>
@@ -27,6 +33,25 @@ const boot = () => {
     </RecoilRoot>,
     document.getElementById(rootId),
   )
+}
+
+const insertGA = () => {
+  var imported = document.createElement('script')
+  imported.async = true
+  imported.src = 'https://www.googletagmanager.com/gtag/js?id=G-N7JGY05S44'
+  document.head.appendChild(imported)
+
+  // @ts-ignore
+  window.dataLayer = window.dataLayer || []
+  // @ts-ignore
+  function gtag() {
+    // @ts-ignore
+    dataLayer.push(arguments)
+  }
+  // @ts-ignore
+  gtag('js', new Date())
+  // @ts-ignore
+  gtag('config', 'G-N7JGY05S44')
 }
 
 let flexBootCheckInterval = window.setInterval(() => {

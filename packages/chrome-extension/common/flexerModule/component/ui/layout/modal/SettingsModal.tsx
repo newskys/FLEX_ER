@@ -128,8 +128,6 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
     return dayjs(date).endOf('month').format(formatStr)
   }
 
-  console.log('DateChecked', startDateChecked, endDateChecked)
-
   return (
     <div
       className={clsx('relative', isFullMode ? 'z-10' : 'z-[11001]')}
