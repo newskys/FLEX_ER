@@ -18,6 +18,7 @@ import SmallIndicator from './component/ui/atomic/SmallIndicator'
 import clsx from 'clsx'
 import { $configsStore } from './store/configs'
 import WidgetDashboardButton from './component/ui/layout/main/WidgetDashboardButton'
+import WidgetCoffeeButton from './component/ui/layout/main/WidgetCoffeeButton'
 
 export type NoticeView = {
   title: string
@@ -382,6 +383,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
       <WidgetHeader isNarrow={isNarrowUI}>
         <WidgetLogo version="v1.4" isNarrow={isNarrowUI} />
         <div className="flex justify-center items-center">
+          <WidgetCoffeeButton />
           <WidgetDashboardButton />
           <WidgetMoreButton
             userSchedule={userSchedule}
