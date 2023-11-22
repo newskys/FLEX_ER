@@ -381,7 +381,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
   return (
     <Widget>
       <WidgetHeader isNarrow={isNarrowUI}>
-        <WidgetLogo version="v1.4" isNarrow={isNarrowUI} />
+        <WidgetLogo version="v1.5" isNarrow={isNarrowUI} />
         <div className="flex justify-center items-center">
           <WidgetCoffeeButton />
           <WidgetDashboardButton />
@@ -393,6 +393,12 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
         </div>
       </WidgetHeader>
       <WidgetBody isExpanded={isExpanded}>
+        <div className="text-xs text-orange-400 text-center">
+          {settingsStore.isWorkingHourFixed &&
+            `8시간 근무제${!isNarrowUI ? ' 적용 중' : ''}`}
+          {!settingsStore.isWorkingHourFixed &&
+            `1개월 ${!isNarrowUI ? '단위 ':''}근무제(8시간 X)${!isNarrowUI ? ' 적용 중' : ''}`}
+        </div>
         {!isExpanded && (
           <div className={clsx('flex', isNarrowUI ? 'flex-col' : 'flex-row')}>
             <SmallIndicator
