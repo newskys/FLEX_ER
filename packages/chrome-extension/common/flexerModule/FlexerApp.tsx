@@ -381,7 +381,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
   return (
     <Widget>
       <WidgetHeader isNarrow={isNarrowUI}>
-        <WidgetLogo version="v1.5" isNarrow={isNarrowUI} />
+        <WidgetLogo version="v1.5.1" isNarrow={isNarrowUI} />
         <div className="flex justify-center items-center">
           <WidgetCoffeeButton />
           <WidgetDashboardButton />

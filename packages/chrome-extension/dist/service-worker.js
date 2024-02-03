@@ -33,12 +33,10 @@ chrome.sidePanel
   .catch((error) => console.error(error));
 
 chrome.tabs.onUpdated.addListener(async (tabId, info, tab) => {
-  console.log('tab', new URL(tab.url).origin)
   if (!tab.url) return;
   const url = new URL(tab.url);
   // Enables the side panel on google.com
   if (url.origin === 'https://flex.team') {
-    console.log('trueture')
     await chrome.sidePanel.setOptions({
       tabId,
       path: '/dist/sidepanel.html',
