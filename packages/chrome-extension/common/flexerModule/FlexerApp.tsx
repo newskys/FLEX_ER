@@ -11,7 +11,7 @@ import { getAllNotices, sendAnalytics } from './api/notice'
 import dayjs from 'dayjs'
 import date from '../../common/util/date'
 import { useRecoilState } from 'recoil'
-import { $settingsStore } from './store/settings'
+import { $settingsStore, Settings } from './store/settings'
 import { CoreValues } from '../../common/type'
 import ExpandButton from './component/ui/atomic/ExpandButton'
 import SmallIndicator from './component/ui/atomic/SmallIndicator'
@@ -39,7 +39,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
     setRequiredExtraWorkingTimeForContract,
   ] = useState<string>(null)
   const [notices, setNotices] = useState<NoticeView[]>([])
-  const [settingsStore, setSettingsStore] = useRecoilState($settingsStore)
+  const [settingsStore, setSettingsStore] = useRecoilState<Settings>($settingsStore)
   const [configsStore, setConfigsStore] = useRecoilState($configsStore)
   const refreshInterval = useRef<number>(null)
   const resizeObserver = useRef<ResizeObserver>(null)
@@ -102,7 +102,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
   }
 
   const showWidget = async () => {
-    const { startDate, endDate, isWorkingHourFixed, isWorkingHourEditable } =
+    const { startDate, endDate, isWorkingHourFixed, isWorkingHourEditable, offsetWorkingHour } =
       await getSettingsFromStorage()
 
     setSettingsStore({
@@ -111,6 +111,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
       endDate,
       isWorkingHourFixed,
       isWorkingHourEditable,
+      offsetWorkingHour,
     })
 
     const schedule = await getSchedule()
@@ -161,6 +162,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
       endDate: undefined,
       isWorkingHourFixed: undefined,
       isWorkingHourEditable: undefined,
+      offsetWorkingHour: undefined,
     }
 
     try {
@@ -203,6 +205,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
           : undefined,
       isWorkingHourFixed: !!value?.isWorkingHourFixed,
       isWorkingHourEditable: date.isWorkingHourEditable(now),
+      offsetWorkingHour: value?.offsetWorkingHour ?? 0,
     }
   }
 

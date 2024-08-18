@@ -83,6 +83,7 @@ function App({ data }: Props) {
       endDate: undefined,
       isWorkingHourFixed: undefined,
       isWorkingHourEditable: undefined,
+      offsetWorkingHour: undefined,
     }
 
     try {
@@ -124,6 +125,7 @@ function App({ data }: Props) {
           : undefined,
       isWorkingHourFixed: !!value?.isWorkingHourFixed,
       isWorkingHourEditable: date.isWorkingHourEditable(now),
+      offsetWorkingHour: value?.offsetWorkingHour ?? 0,
     }
   }
 

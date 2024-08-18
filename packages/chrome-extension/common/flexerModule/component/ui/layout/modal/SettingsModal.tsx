@@ -12,11 +12,9 @@ export interface Props {
 }
 
 const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
-  const startDateCheckRef = useRef<HTMLInputElement>(null)
-  const endDateCheckRef = useRef<HTMLInputElement>(null)
   const isFullMode = useRecoilValue($configsStore).isFullMode
 
-  const { startDate, endDate, isWorkingHourFixed } = settingsStore
+  const { startDate, endDate, isWorkingHourFixed, offsetWorkingHour } = settingsStore
 
   const [fixedWorkingHourChecked, setFixedWorkingHourChecked] =
     useState<boolean>(!!isWorkingHourFixed)
@@ -29,6 +27,8 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
 
   const [endDateChecked, setEndDateChecked] = useState<boolean>(!!endDate)
   const [tempEndDate, setTempEndDate] = useState<Date>(endDate)
+  const [offsetWorkingHourChecked, setOffsetWorkingHourChecked] = useState<boolean>(!!offsetWorkingHour)
+  const [tempOffsetWorkingHour, setTempOffsetWorkingHour] = useState<number>(offsetWorkingHour)
 
   // useEffect(() => {
   // if (settingsStore.isWorkingHourEditable === false) {
@@ -59,6 +59,9 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
   const handleEndDateCheck = (e) => {
     setEndDateChecked(!endDateChecked)
   }
+  const handleOffsetWorkingOurCheck = (e) => {
+    setOffsetWorkingHourChecked(!offsetWorkingHourChecked)
+  }
 
   const handleClickSubmit = (e) => {
     e.preventDefault()
@@ -74,6 +77,7 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
       isWorkingHourFixed: fixedWorkingHourChecked,
       // isWorkingHourEditable: settingsStore.isWorkingHourEditable,
       isWorkingHourEditable: true,
+      offsetWorkingHour: offsetWorkingHourChecked ? tempOffsetWorkingHour : null,
     })
   }
 
@@ -113,6 +117,10 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
 
   const handleChangeEndDate = (e) => {
     setTempEndDate(e.target.value)
+  }
+
+  const handleChangeOffsetWorkingHour = (e) => {
+    setTempOffsetWorkingHour(parseInt(e.target.value))
   }
 
   const handleClickCancel = (e) => {
@@ -227,13 +235,13 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
                       </span>
                     )}
                   </div>
+                  <div className="h-[1px] bg-gray-200 mt-[8px]" />
                   <div className="mt-[8px]">
                     <label
                       htmlFor="customizeStartDate"
                       className="w-fit flex items-center"
                     >
                       <input
-                        ref={startDateCheckRef}
                         id="customizeStartDate"
                         type="checkbox"
                         className="mr-[4px]"
@@ -279,7 +287,6 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
                       className="w-fit flex items-center"
                     >
                       <input
-                        ref={endDateCheckRef}
                         id="customizeEndDate"
                         type="checkbox"
                         className="mr-[4px]"
@@ -315,6 +322,42 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
                         </div>
                       </div>
                     )}
+                  </div>
+                  <div className="mt-[8px]">
+                    <div className="flex items-center">
+                      <label
+                        htmlFor="offsetWorkingHour"
+                        className="w-fit flex items-center flex-1">
+                        <input
+                          // ref={endDateCheckRef}
+                          id="offsetWorkingHour"
+                          type="checkbox"
+                          className="mr-[4px]"
+                          // disabled={!fixedWorkingHourChecked}
+                          style={{ appearance: 'auto' }}
+                          defaultChecked={offsetWorkingHourChecked}
+                          onClick={handleOffsetWorkingOurCheck}
+                        />
+                        <span className="text-base text-gray-500">
+                          기본 근무시간 변경
+                        </span>
+                      </label>
+                      {offsetWorkingHourChecked && (
+                        <>
+                          <input
+                            type="number"
+                            min={-999}
+                            max={999}
+                            defaultValue={
+                             tempOffsetWorkingHour
+                            }
+                            className="flex-0 basis-[content] focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text border-gray-300 rounded-md text-end"
+                            onChange={handleChangeOffsetWorkingHour}
+                          />
+                          <div>시간</div>
+                        </>
+                      )}
+                    </div>
                   </div>
 
                   {/*<div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">*/}
