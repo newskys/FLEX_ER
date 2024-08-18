@@ -354,7 +354,7 @@ const SettingsModal = ({ settingsStore, onSubmit, onCancel }: Props) => {
                             className="flex-0 basis-[content] focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text border-gray-300 rounded-md text-end"
                             onChange={handleChangeOffsetWorkingHour}
                           />
-                          <div>시간</div>
+                          <div>시간 (음수인 경우 차감)</div>
                         </>
                       )}
                     </div>

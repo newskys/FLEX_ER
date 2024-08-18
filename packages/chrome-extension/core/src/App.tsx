@@ -55,6 +55,7 @@ function App({ data }: Props) {
       userSettings.startDate,
       userSettings.endDate,
       userSettings.isWorkingHourFixed,
+      userSettings.offsetWorkingHour,
     )
 
     saveSchedulesToStorage(schedule, coreValues)
@@ -134,6 +135,7 @@ function App({ data }: Props) {
     startDate: Date | undefined,
     endDate: Date | undefined,
     isWorkingHourFixed: boolean,
+    offsetWorkingHour: number,
   ) => {
     const {
       days,
@@ -145,10 +147,10 @@ function App({ data }: Props) {
       0,
     )
 
-    const requiredTotalWorkingMinutes = isWorkingHourFixed
+    const requiredTotalWorkingMinutes = (isWorkingHourFixed
       ? days.filter((day) => !isHoliday(day, false)).length *
         StandardWorkingMinutes
-      : baseWorkingMinutes - workingHolidayMinutes
+      : baseWorkingMinutes - workingHolidayMinutes) + ( offsetWorkingHour * 60)
 
     const remainWorkingDays = getRemainWorkingDays(
       schedule,
