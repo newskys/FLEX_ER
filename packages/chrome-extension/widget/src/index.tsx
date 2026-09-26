@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { RecoilRoot } from 'recoil'
 import FlexerApp from '../../common/flexerModule/FlexerApp'
+import { getSidebarHeaderContainer } from '../../common/util/flexDom'
 
 const rootId = 'flexer2-root'
 const modalId = 'flexer2-modal-root'
@@ -9,12 +10,13 @@ const tooltipId = 'flexer2-tooltip-root'
 
 const boot = (anchor: HTMLElement) => {
   const flexReactRoot = document.getElementById('root')
-  const flexRoot = document.getElementById('app-shell-root')
-  const profileEl =
-    flexRoot.querySelector('nav').children[0].children[0].children[0]
 
   const flexerRoot = document.createElement('div')
   flexerRoot.id = rootId
+  // 헤더 컨테이너가 align-items: flex-start인 flex column이므로 폭을 채우도록 stretch하고,
+  // '근무 시작' 버튼 행과 같은 좌우 여백(10px)을 준다.
+  flexerRoot.style.alignSelf = 'stretch'
+  flexerRoot.style.padding = '8px 10px 4px'
 
   const flexerModalRoot = document.createElement('div')
   flexerModalRoot.id = modalId
@@ -25,7 +27,7 @@ const boot = (anchor: HTMLElement) => {
   // console.log('flexerRoot', flexerRoot)
   // console.log('profileEl', anchor)
 
-  anchor.parentElement.insertBefore(flexerRoot, anchor.parentElement.childNodes[2])
+  anchor.insertBefore(flexerRoot, anchor.childNodes[2])
   flexReactRoot.insertBefore(flexerModalRoot, flexReactRoot.children[0])
   flexReactRoot.insertBefore(flexerTooltipRoot, flexReactRoot.children[0])
 
@@ -41,16 +43,8 @@ const boot = (anchor: HTMLElement) => {
 
 let flexBootCheckInterval = window.setInterval(() => {
   try {
-    const flexRoot = document.getElementById('app-shell-root')
-    const anchor = flexRoot.querySelector(':scope > div > nav > div > div') as HTMLElement
+    const anchor = getSidebarHeaderContainer()
 
-    // console.log('!flexRoot', flexRoot)
-    // console.log('!anchor', anchor)
-    // if (nav.getAttribute('data-role') !== 'avatar-root') {
-    //   return
-    // }
-
-    // const profileEl = anchor.children[0].children[0].children[0]
     if (anchor) {
       window.clearInterval(flexBootCheckInterval)
       flexBootCheckInterval = null

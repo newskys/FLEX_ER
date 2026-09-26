@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import { NextData } from '../../../common/type/api/ssr'
+import { getSidebar } from '../../common/util/flexDom'
 
 const rootId = 'flexer2-core'
 
@@ -25,8 +26,7 @@ const boot = () => {
 
 let flexBootCheckInterval = window.setInterval(() => {
   try {
-    const flexRoot = document.getElementById('app-shell-root')
-    if (flexRoot) {
+    if (getSidebar()) {
       window.clearInterval(flexBootCheckInterval)
       flexBootCheckInterval = null
 

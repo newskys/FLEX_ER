@@ -44,7 +44,16 @@ const getCurrentTabUrl = async () => {
   return tab.url ?? ''
 }
 
+const getVersion = () => {
+  try {
+    return `v${chrome.runtime.getManifest().version}`
+  } catch (e) {
+    return ''
+  }
+}
+
 export default {
   sendMessage,
   getCurrentTabUrl,
+  getVersion,
 }

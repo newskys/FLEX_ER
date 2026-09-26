@@ -19,6 +19,7 @@ import clsx from 'clsx'
 import { $configsStore } from './store/configs'
 import WidgetDashboardButton from './component/ui/layout/main/WidgetDashboardButton'
 import WidgetCoffeeButton from './component/ui/layout/main/WidgetCoffeeButton'
+import { getSidebar, getSidebarNav } from '../util/flexDom'
 
 export type NoticeView = {
   title: string
@@ -48,9 +49,10 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
   const [isNarrowUI, setNarrowUI] = useState<boolean | null>(null)
 
   const initExternalElement = () => {
-    const flexRoot = document.getElementById('app-shell-root')
-    const el = flexRoot.children[0].children[0] as HTMLElement
-    el.style.zIndex = '1000'
+    const el = getSidebar()
+    if (el) {
+      el.style.zIndex = '1000'
+    }
   }
 
   const initialize = async () => {
@@ -331,9 +333,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
 
   const addResizeEventListener = () => {
     try {
-      const navEl = document
-        .getElementById('app-shell-root')
-        .querySelector('nav')
+      const navEl = getSidebarNav()
       resizeObserver.current = new ResizeObserver(handleResize)
       resizeObserver.current.observe(navEl)
     } catch (e) {}
@@ -341,9 +341,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
 
   const removeResizeObserver = () => {
     try {
-      const navEl = document
-        .getElementById('app-shell-root')
-        .querySelector('nav')
+      const navEl = getSidebarNav()
       resizeObserver.current.unobserve(navEl)
     } catch (e) {}
   }
@@ -384,7 +382,7 @@ function FlexerApp({ isFullMode }: { isFullMode: boolean }) {
   return (
     <Widget>
       <WidgetHeader isNarrow={isNarrowUI}>
-        <WidgetLogo version="v1.5.1" isNarrow={isNarrowUI} />
+        <WidgetLogo version={chrome.getVersion()} isNarrow={isNarrowUI} />
         <div className="flex justify-center items-center">
           <WidgetCoffeeButton />
           <WidgetDashboardButton />
